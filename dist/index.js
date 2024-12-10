@@ -25686,7 +25686,7 @@ const { exec } = __nccwpck_require__(5236)
 async function run() {
   try {
     //build_deb_src()
-    exec('echo $(realpath `pwd`) && ls -l .')
+    exec('pwd')
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)
