@@ -25665,7 +25665,7 @@ async function build_deb_src() {
       '--git-no-pbuilder',
       `--git-upstream-tree=${current_branch}`,
       '--git-force-create',
-      '--git-builder="debuild --preserve-env --no-lintian -d -S -us -uc"'
+      `--git-builder="/usr/bin/debuild --preserve-env --no-lintian -d -S -us -uc"`
     ])
     await exec.exec('rm -rf ./debian-src-tarball')
     await exec.exec('mkdir -p ./debian-src-tarball')
