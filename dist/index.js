@@ -25646,7 +25646,7 @@ async function build_deb_src() {
     await exec.exec('sudo DEBIAN_FRONTEND=noninteractive apt-get update')
 
     await exec.exec(
-      'sudo DEBIAN_FRONTEND=noninteractive apt install -y -q devscripts equivs git-buildpackage'
+      'sudo DEBIAN_FRONTEND=noninteractive apt install -y devscripts equivs git-buildpackage'
     )
 
     let current_branch = ''
@@ -25666,7 +25666,13 @@ async function build_deb_src() {
       '--git-no-pbuilder',
       `--git-upstream-tree=${current_branch}`,
       '--git-force-create',
-      `--git-builder=/usr/bin/debuild\\ --preserve-env\\ --no-lintian\\ -d\\ -S\\ -us\\ -uc`
+      '--git-builder=/usr/bin/debuild',
+      '--preserve-env',
+      '--no-lintian ',
+      '-d',
+      '-S',
+      '-us',
+      '-uc'
     ])
     await exec.exec('rm -rf ./debian-src-tarball')
     await exec.exec('mkdir -p ./debian-src-tarball')
