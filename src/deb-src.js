@@ -27,7 +27,6 @@ async function build_deb_src() {
       `--git-upstream-tree=${current_branch}`,
       '--git-force-create',
       '--git-builder=/usr/bin/debuild',
-      '--preserve-env',
       '--no-lintian ',
       '-d',
       '-S',
