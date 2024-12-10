@@ -25659,7 +25659,8 @@ async function build_deb_src() {
 
     await exec.exec('git', ['rev-parse', '--abbrev-ref', 'HEAD'], options)
 
-    await exec.exec('gbp', [
+    await exec.exec('sudo', [
+      'gbp',
       'buildpackage',
       '--git-ignore-new',
       '--git-no-pbuilder',
