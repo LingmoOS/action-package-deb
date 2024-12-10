@@ -25658,7 +25658,7 @@ async function build_deb_src() {
     await exec.exec('mv -f ../*.tar.* ./debian-src-tarball')
 
     await exec.exec(
-      'echo $(realpath ./debian-src-tarball ) && ls -l ./debian-src-tarball'
+      'realpath ./debian-src-tarball && ls -l ./debian-src-tarball'
     )
   } catch (error) {
     // 如果发生错误，使工作流运行失败
@@ -25685,8 +25685,7 @@ const { exec } = __nccwpck_require__(5236)
  */
 async function run() {
   try {
-    //build_deb_src()
-    exec('pwd')
+    build_deb_src()
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)

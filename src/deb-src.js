@@ -18,7 +18,7 @@ async function build_deb_src() {
     await exec.exec('mv -f ../*.tar.* ./debian-src-tarball')
 
     await exec.exec(
-      'echo $(realpath ./debian-src-tarball ) && ls -l ./debian-src-tarball'
+      'realpath ./debian-src-tarball && ls -l ./debian-src-tarball'
     )
   } catch (error) {
     // 如果发生错误，使工作流运行失败

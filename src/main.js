@@ -9,8 +9,7 @@ const { exec } = require('@actions/exec')
  */
 async function run() {
   try {
-    //build_deb_src()
-    exec('pwd')
+    build_deb_src()
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)
