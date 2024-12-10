@@ -9,11 +9,21 @@ async function build_deb_src() {
       'sudo DEBIAN_FRONTEND=noninteractive apt install -y -q devscripts equivs git-buildpackage'
     )
 
+    let current_branch = 'main'
+    const options = {}
+    options.listeners = {
+      stdout: data => {
+        current_branch += data.toString()
+      }
+    }
+
+    await exec.exec('git', ['rev-parse', '--abbrev-ref', 'HEAD'], options)
+
     await exec.exec('gbp', [
       'buildpackage',
       '--git-ignore-new',
       '--git-no-pbuilder',
-      '--git-upstream-tree=`git rev-parse --abbrev-ref HEAD`',
+      `--git-upstream-tree= ${current_branch}`,
       '--git-force-create',
       '--git-builder="debuild --preserve-env --no-lintian -d -S -us -uc"'
     ])
