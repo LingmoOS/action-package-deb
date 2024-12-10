@@ -25,6 +25,7 @@ async function build_deb_src() {
       '--git-no-pbuilder',
       `--git-upstream-tree=${current_branch}`,
       '--git-force-create',
+      '--git-builder=dpkg-buildpackage',
       '-d',
       '-S',
       '-us',
