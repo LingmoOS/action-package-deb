@@ -13,7 +13,7 @@ async function build_deb_src() {
     const options = {}
     options.listeners = {
       stdout: data => {
-        current_branch += data.toString()
+        current_branch += data.toString().replace(/[\r\n]/g, '')
       }
     }
 
