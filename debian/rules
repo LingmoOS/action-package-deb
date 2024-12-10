@@ -1,0 +1,5 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# 准备构建环境
+%:
+	dh $@
