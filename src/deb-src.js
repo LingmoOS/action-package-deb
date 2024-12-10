@@ -10,6 +10,7 @@ async function build_deb_src() {
     )
 
     await exec.exec('gbp', [
+      'buildpackage',
       '--git-ignore-new',
       '--git-no-pbuilder',
       '--git-upstream-tree=`git rev-parse --abbrev-ref HEAD`',
