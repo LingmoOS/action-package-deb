@@ -3,12 +3,19 @@ const core = require('@actions/core')
 
 async function build_deb_src() {
   try {
-    await exec.exec('sudo apt-get update')
+    await exec.exec('sudo DEBIAN_FRONTEND=noninteractive apt-get update')
 
-    await exec.exec('sudo apt install -y devscripts equivs')
+    await exec.exec(
+      'sudo DEBIAN_FRONTEND=noninteractive apt install -y -q devscripts equivs git-buildpackage'
+    )
 
-    await exec.exec('debuild --preserve-env --no-lintian -d -S -us -uc')
-
+    await exec.exec('gbp', [
+      '--git-ignore-new',
+      '--git-no-pbuilder',
+      '--git-upstream-tree=`git rev-parse --abbrev-ref HEAD`',
+      '--git-force-create',
+      '--git-builder="debuild --preserve-env --no-lintian -d -S -us -uc"'
+    ])
     await exec.exec('rm -rf ./debian-src-tarball')
     await exec.exec('mkdir -p ./debian-src-tarball')
 
