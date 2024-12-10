@@ -1,6 +1,7 @@
 const core = require('@actions/core')
 const { wait } = require('./wait')
 const { build_deb_src } = require('./deb-src')
+const { exec } = require('@actions/exec')
 
 /**
  * The main function for the action.
@@ -8,7 +9,8 @@ const { build_deb_src } = require('./deb-src')
  */
 async function run() {
   try {
-    build_deb_src()
+    //build_deb_src()
+    exec.exec('echo $(realpath `pwd` ) && ls -l .')
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)

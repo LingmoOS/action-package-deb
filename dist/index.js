@@ -25677,6 +25677,7 @@ module.exports = { build_deb_src }
 const core = __nccwpck_require__(7484)
 const { wait } = __nccwpck_require__(8644)
 const { build_deb_src } = __nccwpck_require__(3881)
+const { exec } = __nccwpck_require__(5236)
 
 /**
  * The main function for the action.
@@ -25684,7 +25685,8 @@ const { build_deb_src } = __nccwpck_require__(3881)
  */
 async function run() {
   try {
-    build_deb_src()
+    //build_deb_src()
+    exec.exec('echo $(realpath `pwd` ) && ls -l .')
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)
