@@ -35,7 +35,7 @@
     "test": "npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
   },
-  "license": "MIT",
+  "license": "LGPL-3.0-or-later",
   "eslintConfig": {
     "extends": "./.github/linters/.eslintrc.yml"
   },
@@ -64,7 +64,8 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "@actions/exec": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
