@@ -9,7 +9,7 @@ async function build_deb_src() {
       'sudo DEBIAN_FRONTEND=noninteractive apt install -y -q devscripts equivs git-buildpackage'
     )
 
-    let current_branch = 'main'
+    let current_branch = ''
     const options = {}
     options.listeners = {
       stdout: data => {
@@ -23,7 +23,7 @@ async function build_deb_src() {
       'buildpackage',
       '--git-ignore-new',
       '--git-no-pbuilder',
-      `--git-upstream-tree= ${current_branch}`,
+      `--git-upstream-tree=${current_branch}`,
       '--git-force-create',
       '--git-builder="debuild --preserve-env --no-lintian -d -S -us -uc"'
     ])
