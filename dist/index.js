@@ -25674,9 +25674,9 @@ async function build_deb_src() {
     await exec.exec('rm -rf ./debian-src-tarball')
     await exec.exec('mkdir -p ./debian-src-tarball')
 
-    await exec.exec('mv -f ../*.dsc ./debian-src-tarball')
-    await exec.exec('mv -f ../*.changes ./debian-src-tarball')
-    await exec.exec('mv -f ../*.tar.* ./debian-src-tarball')
+    await exec.exec('bash -c "mv -f ../*.dsc ./debian-src-tarball"')
+    await exec.exec('bash -c "mv -f ../*.changes ./debian-src-tarball"')
+    await exec.exec('bash -c "mv -f ../*.tar.* ./debian-src-tarball"')
 
     await exec.exec('realpath ./debian-src-tarball')
     await exec.exec('ls -l ./debian-src-tarbal')
