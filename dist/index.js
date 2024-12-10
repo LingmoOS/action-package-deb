@@ -25679,7 +25679,7 @@ async function build_deb_src() {
     await exec.exec('bash -c "mv -f ../*.tar.* ./debian-src-tarball"')
 
     await exec.exec('realpath ./debian-src-tarball')
-    await exec.exec('ls -l ./debian-src-tarbal')
+    await exec.exec('ls -l ./debian-src-tarball')
   } catch (error) {
     // 如果发生错误，使工作流运行失败
     core.setFailed(error.message)
