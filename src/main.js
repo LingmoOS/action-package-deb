@@ -10,7 +10,7 @@ const { exec } = require('@actions/exec')
 async function run() {
   try {
     //build_deb_src()
-    exec('echo $(realpath `pwd` ) && ls -l .')
+    exec('echo "Current working directory: $(realpath `pwd`)" && ls -l .')
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)
