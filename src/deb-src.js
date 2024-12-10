@@ -19,14 +19,12 @@ async function build_deb_src() {
 
     await exec.exec('git', ['rev-parse', '--abbrev-ref', 'HEAD'], options)
 
-    await exec.exec('sudo', [
-      'gbp',
+    await exec.exec('gbp', [
       'buildpackage',
       '--git-ignore-new',
       '--git-no-pbuilder',
       `--git-upstream-tree=${current_branch}`,
       '--git-force-create',
-      "--git-builder='/usr/bin/debuild --no-lintian'",
       '-d',
       '-S',
       '-us',
