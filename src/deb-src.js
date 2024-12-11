@@ -4,14 +4,40 @@ const io = require('@actions/io')
 
 async function build_deb_src(sourceDir, outputDir, gitRefName) {
   try {
+    let options = {}
+
     await exec.exec('sudo DEBIAN_FRONTEND=noninteractive apt-get update')
 
     await exec.exec(
       'sudo DEBIAN_FRONTEND=noninteractive apt install -y devscripts equivs git-buildpackage'
     )
 
-    let options = {}
-    options.cwd = sourceDir
+    // Get realpath of the output directory
+    // Assuming relative to the workspace dir.
+    let realOutputPath = ''
+    options = {}
+    options.cwd = `${process.env.GITHUB_WORKSPACE}`
+    options.listeners = {
+      stdout: data => {
+        realOutputPath = data.toString().replace(/[\r\n]/g, '')
+      }
+    }
+    await exec.exec('realpath', [outputDir], options)
+
+    // Get realpath of the source directory
+    // Assuming relative to the workspace dir.
+    let realSourcePath = ''
+    options = {}
+    options.cwd = `${process.env.GITHUB_WORKSPACE}`
+    options.listeners = {
+      stdout: data => {
+        realSourcePath = data.toString().replace(/[\r\n]/g, '')
+      }
+    }
+    await exec.exec('realpath', [sourceDir], options)
+
+    options = {}
+    options.cwd = realSourcePath
     await exec.exec(
       'gbp',
       [
@@ -29,38 +55,22 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
       options
     )
 
-    // Get realpath of the output directory
-    // Assuming relative to the workspace dir.
-    let realOutputPath = ''
-    options = {}
-    options.cwd = `${process.env.GITHUB_WORKSPACE}`
-    options.listeners = {
-      stdout: data => {
-        realOutputPath = data.toString().replace(/[\r\n]/g, '')
-      }
-    }
-    await exec.exec('realpath', [outputDir], options)
-
     // Making dir
     await io.mkdirP(realOutputPath)
 
-    // Move files to the output directory
-    options = {}
-    options.cwd = sourceDir
-
     await exec.exec(
       'bash',
-      ['-c', `"mv -f ../*.dsc ${realOutputPath}"`],
+      ['-c', `"mv -f ${realSourcePath}/*.dsc ${realOutputPath}"`],
       options
     )
     await exec.exec(
       'bash',
-      ['-c', `"mv -f ../*.changes ${realOutputPath}"`],
+      ['-c', `"mv -f ${realSourcePath}/*.changes ${realOutputPath}"`],
       options
     )
     await exec.exec(
       'bash',
-      ['-c', `"mv -f ../*.tar.* ${realOutputPath}"`],
+      ['-c', `"mv -f ${realSourcePath}/*.tar.* ${realOutputPath}"`],
       options
     )
 

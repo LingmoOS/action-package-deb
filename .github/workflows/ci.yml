@@ -59,7 +59,7 @@ jobs:
         with:
           build-binary: false
           build-source: true
-          outputDir: ./debian-deb-output
+          output-dir: ./debian-deb-output
 
       - name: Print Output
         id: output
