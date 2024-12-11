@@ -1,19 +1,36 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Build Deb in Actions'
+description: 'Build Debian deb file with ease!'
+author: 'Elysia'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  build-binary:
+    description: '构建二进制 deb 文件 (目前尚不支持)'
     required: true
-    default: '1000'
+    default: ''
+  build-source:
+    description: '构建源代码包'
+    required: true
+    default: ''
+  output-dir:
+    description: '输出目录'
+    required: false
+    default: './output'
+  source-dir:
+    description: '源代码目录'
+    required: false
+    default: './source'
+  git-ref-name:
+    description: '用于构建 deb 文件的 Git 引用名称'
+    required: false
+    default: 'main'
+    
 
 # Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+# outputs:
+#   time:
+#     description: 'Your output description here'
 
 runs:
-  using: node20
+  using: node22
   main: dist/index.js
