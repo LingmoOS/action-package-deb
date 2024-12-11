@@ -25641,6 +25641,7 @@ module.exports = {
 const exec = __nccwpck_require__(5236)
 const core = __nccwpck_require__(7484)
 const io = __nccwpck_require__(4994)
+const fs = __nccwpck_require__(9896)
 
 async function build_deb_src(sourceDir, outputDir, gitRefName) {
   try {
@@ -25698,21 +25699,27 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
     // Making dir
     await io.mkdirP(realOutputPath)
 
-    await exec.exec(
-      'bash',
-      ['-c', `"mv -f ${realSourcePath}/../*.dsc ${realOutputPath}"`],
-      options
-    )
-    await exec.exec(
-      'bash',
-      ['-c', `"mv -f ${realSourcePath}/../*.changes ${realOutputPath}"`],
-      options
-    )
-    await exec.exec(
-      'bash',
-      ['-c', `"mv -f ${realSourcePath}/../*.tar.* ${realOutputPath}"`],
-      options
-    )
+    // list all files in the directory
+    fs.readdir(realOutputPath, (err, files) => {
+      if (err) {
+        throw err
+      }
+
+      // files object contains all files names
+      // log them on console
+      for (const file of files) {
+        if (
+          file.indexOf('dsc') !== -1 ||
+          file.indexOf('changes') !== -1 ||
+          file.indexOf('tar') !== -1
+        ) {
+          io.cp(`${realOutputPath}/${file}`, `${realOutputPath}`, {
+            recursive: true,
+            force: true
+          })
+        }
+      }
+    })
 
     await exec.exec(`ls -l ${realOutputPath}`)
   } catch (error) {
