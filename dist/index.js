@@ -25700,17 +25700,17 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
 
     await exec.exec(
       'bash',
-      ['-c', `"mv -f ${realSourcePath}/*.dsc ${realOutputPath}"`],
+      ['-c', `"mv -f ${realSourcePath}/../*.dsc ${realOutputPath}"`],
       options
     )
     await exec.exec(
       'bash',
-      ['-c', `"mv -f ${realSourcePath}/*.changes ${realOutputPath}"`],
+      ['-c', `"mv -f ${realSourcePath}/../*.changes ${realOutputPath}"`],
       options
     )
     await exec.exec(
       'bash',
-      ['-c', `"mv -f ${realSourcePath}/*.tar.* ${realOutputPath}"`],
+      ['-c', `"mv -f ${realSourcePath}/../*.tar.* ${realOutputPath}"`],
       options
     )
 
