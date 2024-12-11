@@ -60,7 +60,7 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
     await io.mkdirP(realOutputPath)
 
     // list all files in the directory
-    fs.readdir(realOutputPath, (err, files) => {
+    fs.readdir(`${realSourcePath}/../`, (err, files) => {
       if (err) {
         throw err
       }
@@ -73,7 +73,7 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
           file.indexOf('changes') !== -1 ||
           file.indexOf('tar') !== -1
         ) {
-          io.cp(`${realOutputPath}/${file}`, `${realOutputPath}`, {
+          io.cp(`${realSourcePath}/../${file}`, `${realOutputPath}`, {
             recursive: true,
             force: true
           })
