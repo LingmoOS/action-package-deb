@@ -1,7 +1,5 @@
 const core = require('@actions/core')
-const { wait } = require('./wait')
 const { build_deb_src } = require('./deb-src')
-const { exec } = require('@actions/exec')
 
 /**
  * The main function for the action.
@@ -9,7 +7,34 @@ const { exec } = require('@actions/exec')
  */
 async function run() {
   try {
-    build_deb_src()
+    // Get user input form workflow
+    const buildBinary = core.getBooleanInput('build-binary', { required: true })
+    const buildSource = core.getBooleanInput('build-source', { required: true })
+    let sourceDir = core.getInput('source-dir')
+    let outputDir = core.getInput('output-dir')
+    let gitRefName = core.getInput('git-ref-name')
+
+    // If source-dir is not set, use the default value
+    if (!sourceDir) {
+      sourceDir = `${process.env.GITHUB_WORKSPACE}`
+    }
+    // If output-dir is not set, use the default value
+    if (!outputDir) {
+      outputDir = `${process.env.GITHUB_WORKSPACE}/debian-src-tarball`
+    }
+    // If gir-ref-name is not set, use the default value
+    if (!gitRefName) {
+      gitRefName = `${process.env.GITHUB_REF}`
+    }
+
+    if (buildSource) {
+      build_deb_src(sourceDir, outputDir, gitRefName)
+    }
+
+    if (buildBinary) {
+      // TODO: Implement build_binary function
+      core.info('Build binary not implemented yet')
+    }
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)

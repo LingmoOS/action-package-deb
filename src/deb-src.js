@@ -1,7 +1,8 @@
 const exec = require('@actions/exec')
 const core = require('@actions/core')
+const io = require('@actions/io')
 
-async function build_deb_src() {
+async function build_deb_src(sourceDir, outputDir, gitRefName) {
   try {
     await exec.exec('sudo DEBIAN_FRONTEND=noninteractive apt-get update')
 
@@ -9,37 +10,61 @@ async function build_deb_src() {
       'sudo DEBIAN_FRONTEND=noninteractive apt install -y devscripts equivs git-buildpackage'
     )
 
-    let current_branch = ''
-    const options = {}
+    let options = {}
+    options.cwd = sourceDir
+    await exec.exec(
+      'gbp',
+      [
+        'buildpackage',
+        '--git-ignore-new',
+        '--git-no-pbuilder',
+        `--git-upstream-tree=${gitRefName}`,
+        '--git-force-create',
+        '--git-builder=dpkg-buildpackage',
+        '-d',
+        '-S',
+        '-us',
+        '-uc'
+      ],
+      options
+    )
+
+    // Get realpath of the output directory
+    // Assuming relative to the workspace dir.
+    let realOutputPath = ''
+    options = {}
+    options.cwd = `${process.env.GITHUB_WORKSPACE}`
     options.listeners = {
       stdout: data => {
-        current_branch += data.toString().replace(/[\r\n]/g, '')
+        realOutputPath = data.toString().replace(/[\r\n]/g, '')
       }
     }
+    await exec.exec('realpath', [outputDir], options)
 
-    await exec.exec('git', ['rev-parse', '--abbrev-ref', 'HEAD'], options)
+    // Making dir
+    await io.mkdirP(realOutputPath)
 
-    await exec.exec('gbp', [
-      'buildpackage',
-      '--git-ignore-new',
-      '--git-no-pbuilder',
-      `--git-upstream-tree=${current_branch}`,
-      '--git-force-create',
-      '--git-builder=dpkg-buildpackage',
-      '-d',
-      '-S',
-      '-us',
-      '-uc'
-    ])
-    await exec.exec('rm -rf ./debian-src-tarball')
-    await exec.exec('mkdir -p ./debian-src-tarball')
+    // Move files to the output directory
+    options = {}
+    options.cwd = sourceDir
 
-    await exec.exec('bash -c "mv -f ../*.dsc ./debian-src-tarball"')
-    await exec.exec('bash -c "mv -f ../*.changes ./debian-src-tarball"')
-    await exec.exec('bash -c "mv -f ../*.tar.* ./debian-src-tarball"')
+    await exec.exec(
+      'bash',
+      ['-c', `"mv -f ../*.dsc ${realOutputPath}"`],
+      options
+    )
+    await exec.exec(
+      'bash',
+      ['-c', `"mv -f ../*.changes ${realOutputPath}"`],
+      options
+    )
+    await exec.exec(
+      'bash',
+      ['-c', `"mv -f ../*.tar.* ${realOutputPath}"`],
+      options
+    )
 
-    await exec.exec('realpath ./debian-src-tarball')
-    await exec.exec('ls -l ./debian-src-tarball')
+    await exec.exec(`ls -l ${realOutputPath}`)
   } catch (error) {
     // 如果发生错误，使工作流运行失败
     core.setFailed(error.message)

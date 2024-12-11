@@ -25640,8 +25640,9 @@ module.exports = {
 
 const exec = __nccwpck_require__(5236)
 const core = __nccwpck_require__(7484)
+const io = __nccwpck_require__(4994)
 
-async function build_deb_src() {
+async function build_deb_src(sourceDir, outputDir, gitRefName) {
   try {
     await exec.exec('sudo DEBIAN_FRONTEND=noninteractive apt-get update')
 
@@ -25649,37 +25650,61 @@ async function build_deb_src() {
       'sudo DEBIAN_FRONTEND=noninteractive apt install -y devscripts equivs git-buildpackage'
     )
 
-    let current_branch = ''
-    const options = {}
+    let options = {}
+    options.cwd = sourceDir
+    await exec.exec(
+      'gbp',
+      [
+        'buildpackage',
+        '--git-ignore-new',
+        '--git-no-pbuilder',
+        `--git-upstream-tree=${gitRefName}`,
+        '--git-force-create',
+        '--git-builder=dpkg-buildpackage',
+        '-d',
+        '-S',
+        '-us',
+        '-uc'
+      ],
+      options
+    )
+
+    // Get realpath of the output directory
+    // Assuming relative to the workspace dir.
+    let realOutputPath = ''
+    options = {}
+    options.cwd = `${process.env.GITHUB_WORKSPACE}`
     options.listeners = {
       stdout: data => {
-        current_branch += data.toString().replace(/[\r\n]/g, '')
+        realOutputPath = data.toString().replace(/[\r\n]/g, '')
       }
     }
+    await exec.exec('realpath', [outputDir], options)
 
-    await exec.exec('git', ['rev-parse', '--abbrev-ref', 'HEAD'], options)
+    // Making dir
+    await io.mkdirP(realOutputPath)
 
-    await exec.exec('gbp', [
-      'buildpackage',
-      '--git-ignore-new',
-      '--git-no-pbuilder',
-      `--git-upstream-tree=${current_branch}`,
-      '--git-force-create',
-      '--git-builder=dpkg-buildpackage',
-      '-d',
-      '-S',
-      '-us',
-      '-uc'
-    ])
-    await exec.exec('rm -rf ./debian-src-tarball')
-    await exec.exec('mkdir -p ./debian-src-tarball')
+    // Move files to the output directory
+    options = {}
+    options.cwd = sourceDir
 
-    await exec.exec('bash -c "mv -f ../*.dsc ./debian-src-tarball"')
-    await exec.exec('bash -c "mv -f ../*.changes ./debian-src-tarball"')
-    await exec.exec('bash -c "mv -f ../*.tar.* ./debian-src-tarball"')
+    await exec.exec(
+      'bash',
+      ['-c', `"mv -f ../*.dsc ${realOutputPath}"`],
+      options
+    )
+    await exec.exec(
+      'bash',
+      ['-c', `"mv -f ../*.changes ${realOutputPath}"`],
+      options
+    )
+    await exec.exec(
+      'bash',
+      ['-c', `"mv -f ../*.tar.* ${realOutputPath}"`],
+      options
+    )
 
-    await exec.exec('realpath ./debian-src-tarball')
-    await exec.exec('ls -l ./debian-src-tarball')
+    await exec.exec(`ls -l ${realOutputPath}`)
   } catch (error) {
     // 如果发生错误，使工作流运行失败
     core.setFailed(error.message)
@@ -25695,9 +25720,7 @@ module.exports = { build_deb_src }
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const core = __nccwpck_require__(7484)
-const { wait } = __nccwpck_require__(8644)
 const { build_deb_src } = __nccwpck_require__(3881)
-const { exec } = __nccwpck_require__(5236)
 
 /**
  * The main function for the action.
@@ -25705,7 +25728,34 @@ const { exec } = __nccwpck_require__(5236)
  */
 async function run() {
   try {
-    build_deb_src()
+    // Get user input form workflow
+    const buildBinary = core.getBooleanInput('build-binary', { required: true })
+    const buildSource = core.getBooleanInput('build-source', { required: true })
+    let sourceDir = core.getInput('source-dir')
+    let outputDir = core.getInput('output-dir')
+    let gitRefName = core.getInput('git-ref-name')
+
+    // If source-dir is not set, use the default value
+    if (!sourceDir) {
+      sourceDir = `${process.env.GITHUB_WORKSPACE}`
+    }
+    // If output-dir is not set, use the default value
+    if (!outputDir) {
+      outputDir = `${process.env.GITHUB_WORKSPACE}/debian-src-tarball`
+    }
+    // If gir-ref-name is not set, use the default value
+    if (!gitRefName) {
+      gitRefName = `${process.env.GITHUB_REF}`
+    }
+
+    if (buildSource) {
+      build_deb_src(sourceDir, outputDir, gitRefName)
+    }
+
+    if (buildBinary) {
+      // TODO: Implement build_binary function
+      core.info('Build binary not implemented yet')
+    }
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)
@@ -25715,30 +25765,6 @@ async function run() {
 module.exports = {
   run
 }
-
-
-/***/ }),
-
-/***/ 8644:
-/***/ ((module) => {
-
-/**
- * Wait for a number of milliseconds.
- *
- * @param {number} milliseconds The number of milliseconds to wait.
- * @returns {Promise<string>} Resolves with 'done!' after the wait is over.
- */
-async function wait(milliseconds) {
-  return new Promise(resolve => {
-    if (isNaN(milliseconds)) {
-      throw new Error('milliseconds not a number')
-    }
-
-    setTimeout(() => resolve('done!'), milliseconds)
-  })
-}
-
-module.exports = { wait }
 
 
 /***/ }),
