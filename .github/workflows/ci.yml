@@ -57,10 +57,10 @@ jobs:
         id: test-action
         uses: ./
         with:
-          buildBinary: false
-          buildSource: true
-          sourceDir: ${env.GITHUB_WORKSPACE}
-          outputDir: ${env.GITHUB_WORKSPACE}/dist-deb-test
+          build-binary: false
+          build-source: true
+          source-dir: ${env.GITHUB_WORKSPACE}
+          output-dir: ${env.GITHUB_WORKSPACE}/dist-deb-test
 
       - name: Print Output
         id: output
