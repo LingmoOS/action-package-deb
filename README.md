@@ -22,12 +22,13 @@ steps:
       build-source: true
       output-dir: ./debian-deb-output
 ```
+
 ## Parameters
 
-| Name | Description | Required |
-| --- | --- | --- |
-| `build-binary` | Build binary package | true |
-| `build-source` | Build source package | true |
-| `output-dir` | Output directory | false |
-| `source-dir` | Source directory | false |
-| `git-ref-name` | Git ref name to build deb | false |
+| Name           | Description               | Required |
+| -------------- | ------------------------- | -------- |
+| `build-binary` | Build binary package      | true     |
+| `build-source` | Build source package      | true     |
+| `output-dir`   | Output directory          | false    |
+| `source-dir`   | Source directory          | false    |
+| `git-ref-name` | Git ref name to build deb | false    |
