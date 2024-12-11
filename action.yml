@@ -19,11 +19,11 @@ inputs:
   source-dir:
     description: '源代码目录'
     required: false
-    default: '${{ env.GITHUB_WORKSPACE }}'
+    default: ''
   git-ref-name:
     description: '用于构建 deb 文件的 Git 引用名称'
     required: false
-    default: '${{ env.GITHUB_REF }}'
+    default: ''
 
 # Define your outputs here.
 # outputs:
