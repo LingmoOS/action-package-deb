@@ -26,23 +26,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: npm
+          cache: yarn
 
       - name: Install Dependencies
         id: npm-ci
-        run: npm ci
+        run: yarn
 
       - name: Check Format
         id: npm-format-check
-        run: npm run format:check
+        run: yarn format:check
 
       - name: Lint
         id: npm-lint
-        run: npm run lint
+        run: yarn lint
 
       - name: Test
         id: npm-ci-test
-        run: npm run ci-test
+        run: yarn ci-test
 
   test-action:
     name: GitHub Actions Test
@@ -59,9 +59,8 @@ jobs:
         with:
           build-binary: false
           build-source: true
-          source-dir: ${{ env.GITHUB_WORKSPACE }}
-          output-dir: ${{ env.GITHUB_WORKSPACE }}/dist-deb-test
+          outputDir: ./debian-deb-output
 
       - name: Print Output
         id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+        run: ls -lR debian-deb-output
