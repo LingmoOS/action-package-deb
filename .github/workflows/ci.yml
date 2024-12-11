@@ -59,8 +59,8 @@ jobs:
         with:
           build-binary: false
           build-source: true
-          source-dir: ${env.GITHUB_WORKSPACE}
-          output-dir: ${env.GITHUB_WORKSPACE}/dist-deb-test
+          source-dir: ${{ env.GITHUB_WORKSPACE }}
+          output-dir: ${{ env.GITHUB_WORKSPACE }}/dist-deb-test
 
       - name: Print Output
         id: output
