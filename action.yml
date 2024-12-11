@@ -7,11 +7,11 @@ inputs:
   build-binary:
     description: '构建二进制 deb 文件 (目前尚不支持)'
     required: true
-    default: ''
+    default: false
   build-source:
     description: '构建源代码包'
     required: true
-    default: ''
+    default: true
   output-dir:
     description: '输出目录'
     required: false
@@ -19,12 +19,11 @@ inputs:
   source-dir:
     description: '源代码目录'
     required: false
-    default: './source'
+    default: '${{ env.GITHUB_WORKSPACE }}'
   git-ref-name:
     description: '用于构建 deb 文件的 Git 引用名称'
     required: false
-    default: 'main'
-    
+    default: '${{ env.GITHUB_REF }}'
 
 # Define your outputs here.
 # outputs:

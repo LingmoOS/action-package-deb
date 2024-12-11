@@ -60,6 +60,7 @@ jobs:
           build-binary: false
           build-source: true
           output-dir: ./debian-deb-output
+          source-dir: ./
 
       - name: Print Output
         id: output
