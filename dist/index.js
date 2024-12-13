@@ -25679,6 +25679,11 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
 
     options = {}
     options.cwd = realSourcePath
+
+    // Switch to a branch
+    await exec.exec('git', ['checkout ', '-b', gitRefName], options)
+
+    // build
     await exec.exec(
       'gbp',
       [
