@@ -18,6 +18,10 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
     let realOutputPath = ''
     options = {}
     options.cwd = `${process.env.GITHUB_WORKSPACE}`
+    options.env = {
+      DEBEMAIL: 'action-runner@github.com',
+      DEBFULLNAME: 'action-runner'
+    }
     options.listeners = {
       stdout: data => {
         realOutputPath = data.toString().replace(/[\r\n]/g, '')
@@ -46,8 +50,8 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
     // Add suffix to package version
     if (addSuffix) {
       await exec.exec(
-        'dch',
-        ['-l', '$(date +%Y%M%d%H%M)', 'Auto\\ Build'],
+        'yes',
+        ['|', 'dch', '-l', '$(date +%Y%M%d%H%M)', 'Auto\\ Build'],
         options
       )
     }
