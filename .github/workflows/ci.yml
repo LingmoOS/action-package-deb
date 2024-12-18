@@ -57,6 +57,7 @@ jobs:
         id: test-action
         uses: ./
         with:
+          add-suffix: true
           build-binary: false
           build-source: true
           output-dir: ./debian-deb-output

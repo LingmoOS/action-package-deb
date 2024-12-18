@@ -8,6 +8,7 @@ const { build_deb_src } = require('./deb-src')
 async function run() {
   try {
     // Get user input form workflow
+    const addSuffix = core.getBooleanInput('add-suffix', { required: true })
     const buildBinary = core.getBooleanInput('build-binary', { required: true })
     const buildSource = core.getBooleanInput('build-source', { required: true })
     let sourceDir = core.getInput('source-dir')
@@ -28,7 +29,7 @@ async function run() {
     }
 
     if (buildSource) {
-      build_deb_src(sourceDir, outputDir, gitRefName)
+      build_deb_src(sourceDir, outputDir, gitRefName, addSuffix)
     }
 
     if (buildBinary) {

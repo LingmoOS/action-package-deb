@@ -3,7 +3,7 @@ const core = require('@actions/core')
 const io = require('@actions/io')
 const fs = require('fs')
 
-async function build_deb_src(sourceDir, outputDir, gitRefName) {
+async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
   try {
     let options = {}
 
@@ -42,6 +42,15 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
 
     // Switch to a branch
     await exec.exec('git', ['checkout', '-b', gitRefName], options)
+
+    // Add suffix to package version
+    if (addSuffix) {
+      await exec.exec(
+        'dch',
+        ['-l', '$(date +%Y%M%d%H%M)', 'Auto\\ Build'],
+        options
+      )
+    }
 
     // build
     await exec.exec(

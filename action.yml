@@ -4,14 +4,18 @@ author: 'Elysia'
 
 # Define your inputs here.
 inputs:
+  add-suffix:
+    description: '添加一个时间后缀到软件包版本号'
+    required: true
+    default: 'false'
   build-binary:
     description: '构建二进制 deb 文件 (目前尚不支持)'
     required: true
-    default: false
+    default: 'false'
   build-source:
     description: '构建源代码包'
     required: true
-    default: true
+    default: 'true'
   output-dir:
     description: '输出目录'
     required: false
