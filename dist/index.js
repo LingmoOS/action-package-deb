@@ -25643,7 +25643,7 @@ const core = __nccwpck_require__(7484)
 const io = __nccwpck_require__(4994)
 const fs = __nccwpck_require__(9896)
 
-async function build_deb_src(sourceDir, outputDir, gitRefName) {
+async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
   try {
     let options = {}
 
@@ -25682,6 +25682,15 @@ async function build_deb_src(sourceDir, outputDir, gitRefName) {
 
     // Switch to a branch
     await exec.exec('git', ['checkout', '-b', gitRefName], options)
+
+    // Add suffix to package version
+    if (addSuffix) {
+      await exec.exec(
+        'dch',
+        ['-l', '$(date +%Y%M%d%H%M)', 'Auto\\ Build'],
+        options
+      )
+    }
 
     // build
     await exec.exec(
@@ -25754,6 +25763,7 @@ const { build_deb_src } = __nccwpck_require__(3881)
 async function run() {
   try {
     // Get user input form workflow
+    const addSuffix = core.getBooleanInput('add-suffix', { required: true })
     const buildBinary = core.getBooleanInput('build-binary', { required: true })
     const buildSource = core.getBooleanInput('build-source', { required: true })
     let sourceDir = core.getInput('source-dir')
@@ -25774,7 +25784,7 @@ async function run() {
     }
 
     if (buildSource) {
-      build_deb_src(sourceDir, outputDir, gitRefName)
+      build_deb_src(sourceDir, outputDir, gitRefName, addSuffix)
     }
 
     if (buildBinary) {
