@@ -54,7 +54,7 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
         [
           '-i',
           '-c',
-          'yes | dch -l $(date +%Y%M%d%H%M) Auto\\ Build 2>/dev/null'
+          '"yes | dch -l $(date +%Y%M%d%H%M) Auto\\ Build 2>/dev/null"'
         ],
         options
       )
