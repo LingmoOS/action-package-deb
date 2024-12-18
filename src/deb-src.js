@@ -18,10 +18,6 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
     let realOutputPath = ''
     options = {}
     options.cwd = `${process.env.GITHUB_WORKSPACE}`
-    options.env = {
-      DEBEMAIL: 'action-runner@github.com',
-      DEBFULLNAME: 'action-runner'
-    }
     options.listeners = {
       stdout: data => {
         realOutputPath = data.toString().replace(/[\r\n]/g, '')
@@ -43,6 +39,10 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
 
     options = {}
     options.cwd = realSourcePath
+    options.env = {
+      DEBEMAIL: 'action-runner@github.com',
+      DEBFULLNAME: 'action-runner'
+    }
 
     // Switch to a branch
     await exec.exec('git', ['checkout', '-b', gitRefName], options)
