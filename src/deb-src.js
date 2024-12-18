@@ -39,10 +39,6 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
 
     options = {}
     options.cwd = realSourcePath
-    options.env = {
-      DEBEMAIL: 'action-runner@github.com',
-      DEBFULLNAME: 'action-runner'
-    }
 
     // Switch to a branch
     await exec.exec('git', ['checkout', '-b', gitRefName], options)
@@ -52,7 +48,13 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
       await exec.exec(
         'bash',
         ['-c', 'yes | dch -l $(date +%Y%M%d%H%M) Auto\\ Build'],
-        options
+        {
+          cwd: realSourcePath,
+          env: {
+            DEBEMAIL: 'action-runner@github.com',
+            DEBFULLNAME: 'action-runner'
+          }
+        }
       )
     }
 
