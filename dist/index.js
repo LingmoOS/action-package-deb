@@ -25690,8 +25690,8 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
     // Add suffix to package version
     if (addSuffix) {
       await exec.exec(
-        'yes',
-        ['|', 'dch', '-l', '$(date +%Y%M%d%H%M)', 'Auto\\ Build'],
+        'bash',
+        ['-i', '-c', 'yes | dch -l $(date +%Y%M%d%H%M) Auto\\ Build'],
         options
       )
     }
