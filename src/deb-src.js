@@ -51,7 +51,11 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
     if (addSuffix) {
       await exec.exec(
         'bash',
-        ['-i', '-c', 'yes | dch -l $(date +%Y%M%d%H%M) Auto\\ Build'],
+        [
+          '-i',
+          '-c',
+          'yes | dch -l $(date +%Y%M%d%H%M) Auto\\ Build 2>/dev/null'
+        ],
         options
       )
     }
