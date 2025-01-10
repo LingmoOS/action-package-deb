@@ -25687,7 +25687,7 @@ async function build_deb_src(sourceDir, outputDir, gitRefName, addSuffix) {
     if (addSuffix) {
       await exec.exec(
         'bash',
-        ['-c', 'yes | dch -l $(date +~%Y%M%d%H%M) Auto\\ Build'],
+        ['-c', 'yes | dch -l $(date +~%Y%m%d%H%M) Auto\\ Build'],
         {
           cwd: realSourcePath,
           env: {
