@@ -16,7 +16,7 @@ steps:
 
   - name: Run my Action
     id: run-action
-    uses: LingmoOS/action-package-deb@0.0.1
+    uses: LingmoOS/action-package-deb@0.0.6
     with:
       build-binary: false
       build-source: true
