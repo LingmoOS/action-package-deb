@@ -1280,16 +1280,20 @@
   resolved "https://registry.npmjs.org/@github/browserslist-config/-/browserslist-config-1.0.0.tgz"
   integrity sha512-gIhjdJp/c2beaIWWIlsXdqXVRUz3r2BxBCpfz/F3JXHvSAQ1paMYjLH+maEATtENg+k5eLV7gA+9yPp762ieuw==
 
-"@github/local-action@^2.6.4":
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/@github/local-action/-/local-action-2.6.4.tgz#7871cb45b99627d3e1d5c889d03f6572f073f0fd"
-  integrity sha512-XQsA3fgIAPnaIa9EEyg1OVFg6pXqVd/TqMK6zhu9arjLCZGrLEVDOE4E0ry+22gbTbLjyaQv0SeWTolAbXm2WA==
+"@github/local-action@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@github/local-action/-/local-action-3.1.0.tgz#327151dd4bcf57bb72d4be09350f98651a19c574"
+  integrity sha512-CvSuDWJzk4HYRdem3lOH4ylT95YyynoRxWoK7A1BmhShcDKpxeFmnGmh+yG+EJ8WAXxInbYGIqal0KKvkaR09A==
   dependencies:
     "@actions/artifact" "^2.2.0"
     "@actions/core" "^1.11.1"
+    "@actions/exec" "^1.1.1"
     "@actions/github" "^6.0.0"
     "@actions/http-client" "^2.2.3"
     "@octokit/core" "^6.1.3"
+    "@octokit/plugin-paginate-rest" "^11.4.3"
+    "@octokit/plugin-request-log" "^5.3.1"
+    "@octokit/plugin-rest-endpoint-methods" "^13.3.1"
     "@octokit/plugin-retry" "^7.1.2"
     archiver "^7.0.1"
     chalk "^5.3.0"
@@ -1301,6 +1305,7 @@
     tsconfig-paths "^4.2.0"
     tsx "^4.19.2"
     typescript "^5.6.3"
+    undici "^7.4.0"
     unzip-stream "^0.3.4"
     yaml "^2.6.1"
 
@@ -1731,6 +1736,13 @@
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-23.0.1.tgz#3721646ecd36b596ddb12650e0e89d3ebb2dd50e"
   integrity sha512-izFjMJ1sir0jn0ldEKhZ7xegCTj/ObmEDlEfpFrx4k/JyZSMRHbO3/rBwgE7f3m2DHt+RrNGIVw4wSmwnm3t/g==
 
+"@octokit/plugin-paginate-rest@^11.4.3":
+  version "11.4.3"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-11.4.3.tgz#b5030bba2e0ecff8e6ff7501074c1b209af78ff8"
+  integrity sha512-tBXaAbXkqVJlRoA/zQVe9mUdb8rScmivqtpv3ovsC5xhje/a+NOCivs7eUhWBwCApJVsR4G5HMeaLbq7PxqZGA==
+  dependencies:
+    "@octokit/types" "^13.7.0"
+
 "@octokit/plugin-paginate-rest@^2.17.0":
   version "2.21.3"
   resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-2.21.3.tgz#7f12532797775640dbb8224da577da7dc210c87e"
@@ -1750,12 +1762,24 @@
   resolved "https://registry.yarnpkg.com/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz#5e50ed7083a613816b1e4a28aeec5fb7f1462e85"
   integrity sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==
 
+"@octokit/plugin-request-log@^5.3.1":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-request-log/-/plugin-request-log-5.3.1.tgz#ccb75d9705de769b2aa82bcd105cc96eb0c00f69"
+  integrity sha512-n/lNeCtq+9ofhC15xzmJCNKP2BWTv8Ih2TTy+jatNCCq/gQP/V7rK3fjIfuz0pDWDALO/o/4QY4hyOF6TQQFUw==
+
 "@octokit/plugin-rest-endpoint-methods@^10.0.0":
   version "10.4.1"
   resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-10.4.1.tgz#41ba478a558b9f554793075b2e20cd2ef973be17"
   integrity sha512-xV1b+ceKV9KytQe3zCVqjg+8GTGfDYwaT1ATU5isiUyVtlVAO3HNdzpS4sr4GBx4hxQ46s7ITtZrAsxG22+rVg==
   dependencies:
     "@octokit/types" "^12.6.0"
+
+"@octokit/plugin-rest-endpoint-methods@^13.3.1":
+  version "13.3.1"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-13.3.1.tgz#1915976b689662f14d033a16e7d9307c22842234"
+  integrity sha512-o8uOBdsyR+WR8MK9Cco8dCgvG13H1RlM1nWnK/W7TEACQBFux/vPREgKucxUfuDQ5yi1T3hGf4C5ZmZXAERgwQ==
+  dependencies:
+    "@octokit/types" "^13.8.0"
 
 "@octokit/plugin-rest-endpoint-methods@^5.13.0":
   version "5.16.2"
@@ -1854,7 +1878,7 @@
   dependencies:
     "@octokit/openapi-types" "^22.2.0"
 
-"@octokit/types@^13.6.2", "@octokit/types@^13.8.0":
+"@octokit/types@^13.6.2", "@octokit/types@^13.7.0", "@octokit/types@^13.8.0":
   version "13.8.0"
   resolved "https://registry.yarnpkg.com/@octokit/types/-/types-13.8.0.tgz#3815885e5abd16ed9ffeea3dced31d37ce3f8a0a"
   integrity sha512-x7DjTIbEpEWXK99DMd01QfWy0hd5h4EN+Q7shkdKds3otGQP+oWE/y0A76i1OvH9fygo4ddvNf7ZvF0t78P98A==
@@ -5637,6 +5661,11 @@ undici@^5.25.4:
   integrity sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==
   dependencies:
     "@fastify/busboy" "^2.0.0"
+
+undici@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-7.4.0.tgz#a2606aa5ceeeaac0ddcc00937586c3bc06bfafdc"
+  integrity sha512-PUQM3/es3noM24oUn10u3kNNap0AbxESOmnssmW+dOi9yGwlUSi5nTNYl3bNbTkWOF8YZDkx2tCmj9OtQ3iGGw==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.1"
