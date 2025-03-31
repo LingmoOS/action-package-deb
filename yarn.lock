@@ -229,10 +229,10 @@
     json5 "^2.2.3"
     semver "^6.3.1"
 
-"@babel/eslint-parser@^7.26.10":
-  version "7.26.10"
-  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.26.10.tgz#4423cb3f84c26978439feabfe23c5aa929400737"
-  integrity sha512-QsfQZr4AiLpKqn7fz+j7SN+f43z2DZCgGyYbNJ2vJOqKfG4E6MZer1+jqGZqKJaxq/gdO2DC/nUu45+pOL5p2Q==
+"@babel/eslint-parser@^7.27.0":
+  version "7.27.0"
+  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.27.0.tgz#d55e52a5ef3b164139a799dc522c338faba3507c"
+  integrity sha512-dtnzmSjXfgL/HDgMcmsLSzyGbEosi4DrGWoCNfuI+W4IkVJw6izpTe7LtOdwAXnkDqw5yweboYCTkM2rQizCng==
   dependencies:
     "@nicolo-ribaudo/eslint-scope-5-internals" "5.1.1-v1"
     eslint-visitor-keys "^2.1.0"
@@ -1280,10 +1280,10 @@
   resolved "https://registry.npmjs.org/@github/browserslist-config/-/browserslist-config-1.0.0.tgz"
   integrity sha512-gIhjdJp/c2beaIWWIlsXdqXVRUz3r2BxBCpfz/F3JXHvSAQ1paMYjLH+maEATtENg+k5eLV7gA+9yPp762ieuw==
 
-"@github/local-action@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@github/local-action/-/local-action-3.1.1.tgz#90a37bcd6dfd7d2cb54b60dbfbbc6931b1483242"
-  integrity sha512-Zsxp2DkbtY0AXQHB5yujeLcTereOyOvFTtC07576i87C+2wNwpl6dSkHqvv9FIhuNklDl8Qu8DRG78rYzyPA2w==
+"@github/local-action@^3.1.3":
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@github/local-action/-/local-action-3.1.3.tgz#e671245ab449c1c66c4d87c66e633c06f3976cac"
+  integrity sha512-Pi2Mf7bIiFN30xgDtaQf0Yvm2fZ1QnMGZmNHAKimW/ntCLFVJQsWXmNo3GqzsENbyXcsb2ziZ6DJI5b9TmWYig==
   dependencies:
     "@actions/artifact" "^2.2.0"
     "@actions/core" "^1.11.1"
