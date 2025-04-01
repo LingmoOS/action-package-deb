@@ -29,7 +29,6 @@ parserOptions:
 
 plugins:
   - jest
-  - github
 
 extends:
   - eslint:recommended
