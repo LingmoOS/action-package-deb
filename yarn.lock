@@ -1349,10 +1349,10 @@
   resolved "https://registry.npmjs.org/@github/browserslist-config/-/browserslist-config-1.0.0.tgz"
   integrity sha512-gIhjdJp/c2beaIWWIlsXdqXVRUz3r2BxBCpfz/F3JXHvSAQ1paMYjLH+maEATtENg+k5eLV7gA+9yPp762ieuw==
 
-"@github/local-action@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@github/local-action/-/local-action-3.2.0.tgz#9b94602587898924a8bfe7cf7a3ae0f7f1f5aadc"
-  integrity sha512-BkOYsAY1cKHdM39JJKDvGNcOptLvxAADPfgWebztGrxwejssi+/PA4UTIHem+sX+6gWkaqIhSFEIVGLm0/z7NQ==
+"@github/local-action@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@github/local-action/-/local-action-3.2.1.tgz#a6207a16bca82de8e54efc95520d903925873ac5"
+  integrity sha512-PSIkLxyxpvTe+ftejQY5esaJ7i2w9PnREAkDEOvEn3hBacLAlNaMrwwz4dSGe+89egLWl+EzOaUjw1ZLyCHudQ==
   dependencies:
     "@actions/artifact" "^2.3.2"
     "@actions/core" "^1.11.1"
