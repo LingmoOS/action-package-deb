@@ -2064,7 +2064,7 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
-"@types/babel__core@^7.1.14":
+"@types/babel__core@^7.1.14", "@types/babel__core@^7.20.5":
   version "7.20.5"
   resolved "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.5.tgz"
   integrity sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==
@@ -2492,6 +2492,15 @@ babel-plugin-istanbul@^6.1.1:
     istanbul-lib-instrument "^5.0.4"
     test-exclude "^6.0.0"
 
+babel-plugin-jest-hoist@30.0.1:
+  version "30.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-30.0.1.tgz#f271b2066d2c1fb26a863adb8e13f85b06247125"
+  integrity sha512-zTPME3pI50NsFW8ZBaVIOeAxzEY7XHlmWeXXu9srI+9kNfzCUTy8MFan46xOGZY8NZThMqq+e3qZUKsvXbasnQ==
+  dependencies:
+    "@babel/template" "^7.27.2"
+    "@babel/types" "^7.27.3"
+    "@types/babel__core" "^7.20.5"
+
 babel-plugin-jest-hoist@^29.6.3:
   version "29.6.3"
   resolved "https://registry.npmjs.org/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-29.6.3.tgz"
@@ -2526,7 +2535,7 @@ babel-plugin-polyfill-regenerator@^0.6.1:
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.6.3"
 
-babel-preset-current-node-syntax@^1.0.0:
+babel-preset-current-node-syntax@^1.0.0, babel-preset-current-node-syntax@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/babel-preset-current-node-syntax/-/babel-preset-current-node-syntax-1.1.0.tgz"
   integrity sha512-ldYss8SbBlWva1bs28q78Ju5Zq1F+8BrqBZZ0VFhLBvhh6lCpC2o3gDJi/5DRLs9FgYZCnmPYIVFU4lRXCkyUw==
@@ -2554,6 +2563,14 @@ babel-preset-jest@^29.6.3:
   dependencies:
     babel-plugin-jest-hoist "^29.6.3"
     babel-preset-current-node-syntax "^1.0.0"
+
+babel-preset-jest@^30.0.1:
+  version "30.0.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-30.0.1.tgz#7d28db9531bce264e846c8483d54236244b8ae88"
+  integrity sha512-+YHejD5iTWI46cZmcc/YtX4gaKBtdqCHCVfuVinizVpbmyjO3zYmeuyFdfA8duRqQZfgCAMlsfmkVbJ+e2MAJw==
+  dependencies:
+    babel-plugin-jest-hoist "30.0.1"
+    babel-preset-current-node-syntax "^1.1.0"
 
 balanced-match@^1.0.0:
   version "1.0.2"
